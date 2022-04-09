@@ -5,7 +5,7 @@
 # @License : Unkown
 
 import os
-import time,datetime
+import time, datetime
 import uiautomator2 as u2
 import requests
 import json
@@ -23,12 +23,12 @@ d = u2.connect_adb_wifi('192.168.1.105:5555')
 def connectPhone():
     d = u2.connect_adb_wifi('192.168.1.105:5555')
     d.app_start("com.alibaba.android.rimet")
-    d2 = d(text="工作台").exists(timeout=3)
-    print(d2)
+    d1 = d(text="工作台").exists(timeout=3)
+    print("进入工作台",d1)
     d(text="工作台").click()
     time.sleep(5)
-    d1 = d(text="考勤打卡").exists(timeout=3)
-    print(d1)
+    d2 = d(text="考勤打卡").exists(timeout=3)
+    print("进入考勤打卡", d2)
     d(text="考勤打卡").click()
     time.sleep(5)
     # if d(text="上班打卡").exists(timeout=3):
@@ -120,23 +120,18 @@ def startMain():
         touch("light")
         connectPhone()
         # send_info()
+        time.sleep(5)
         touch("lock")
         return "手机锁屏状态运行"
 
     else:
         connectPhone()
         # send_info()
+        time.sleep(5)
         touch("lock")
         return "手机未锁屏状态运行"
 
 
 if __name__ == '__main__':
-    # runtime()
-    # startMain()
-    # send_info()
-    # connectPhone()
-    runningData = []
-    runningData.append(device_battery())
-    runningData.append(startMain())
-    # runningData.append(connectPhone())
+    runningData = ['http://dd.pitalk.cn/usr/uploads/work/dingding.jpg', device_battery(), startMain()]
     send_info(runningData)

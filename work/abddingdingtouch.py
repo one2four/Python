@@ -23,6 +23,7 @@ d = u2.connect_adb_wifi('192.168.1.105:5555')
 def connectPhone():
     d = u2.connect_adb_wifi('192.168.1.105:5555')
     d.app_start("com.alibaba.android.rimet")
+    time.sleep(5)
     d1 = d(text="工作台").exists(timeout=3)
     print("进入工作台",d1)
     d(text="工作台").click()
@@ -47,25 +48,81 @@ def connectPhone():
     d.app_stop("com.alibaba.android.rimet")
 
 
-def send_info(runningData):
-    feishuwebhook = "https://open.feishu.cn/open-apis/bot/v2/hook/413f4033-2758-4776-bcb1-219f933248bb"
+# def send_info(runningData):
+#     feishuwebhook = "https://open.feishu.cn/open-apis/bot/v2/hook/413f4033-2758-4776-bcb1-219f933248bb"
+#
+#     payload_message = {
+#         "msg_type": "text",
+#         "content": {
+#             "text": "test",
+#         }
+#     }
+#     payload_message['content']['text'] = '{runningData_content}'.format(runningData_content=runningData)
+#     headers = {
+#         'Content-Type': 'application/json'
+#     }
+#     print(payload_message)
+#     # requests.request()
+#     print(json.dumps(payload_message))
+#     response = requests.request("POST", feishuwebhook, headers=headers, data=json.dumps(payload_message))
+#     # print(response.content)
 
+
+def send_info_test(runningData):
+    feishuwebhook = "https://open.feishu.cn/open-apis/bot/v2/hook/413f4033-2758-4776-bcb1-219f933248bb"
     payload_message = {
-        "msg_type": "text",
-        "content": {
-            "text": "test",
+        "msg_type": "interactive",
+        "card": {
+            "header": {
+                "title": {
+                    "content": "🏀点击链接查看详细信息🏀",
+                    "tag": "plain_text"
+                },
+                "template": "blue"
+            },
+            "elements": [
+                {
+                    "tag": "markdown",
+                    "content": "🔗[截图链接]\n($urlVal)",
+                    "href": {
+                        "urlVal": {
+                            "url": "http://dd.pitalk.cn/",
+                        }
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "markdown",
+                    "content": "📱🔋" + runningData[0] + "🏔️🌋🏜️🏕️",
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "markdown",
+                    "content": "🧭🌐🌏🗺️" + runningData[1] + "🏔️🌋🏜️🏕️",
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "markdown",
+                    "content": "📅程序运行时间☘️" + runningData[2] + "🍀⌛⏱",
+                },
+            ]
         }
     }
-
-    payload_message['content']['text'] = '{runningData_content}'.format(runningData_content=runningData)
+    # payload_message['content']['text'] = '{runningData_content}'.format(runningData_content=runningData)
     headers = {
         'Content-Type': 'application/json'
     }
-    print(payload_message)
+    # print(payload_message)
     # requests.request()
-    print(json.dumps(payload_message))
+    # print(json.dumps(payload_message))
     response = requests.request("POST", feishuwebhook, headers=headers, data=json.dumps(payload_message))
-    # print(response.content)
+    print(response.content)
 
 
 def onClick(x, y):
@@ -122,6 +179,7 @@ def startMain():
         # send_info()
         time.sleep(5)
         touch("lock")
+        # print(connectPhone())
         return "手机锁屏状态运行"
 
     else:
@@ -129,9 +187,20 @@ def startMain():
         # send_info()
         time.sleep(5)
         touch("lock")
+        # print(connectPhone())
         return "手机未锁屏状态运行"
 
 
+# 程序运行时间
+def run_time():
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+
 if __name__ == '__main__':
-    runningData = ['http://dd.pitalk.cn/usr/uploads/work/dingding.jpg', device_battery(), startMain()]
-    send_info(runningData)
+    runningData = [device_battery(), startMain(), run_time()]
+    # runningData = [run_time()]
+    print(runningData)
+    # print(runningData[0])
+    # print(runningData[1])
+    # send_info(runningData)
+    send_info_test(runningData)

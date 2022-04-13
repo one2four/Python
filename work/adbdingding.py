@@ -9,14 +9,14 @@ import uiautomator2 as u2
 import time
 # from apscheduler.schedulers.blocking import BlockingScheduler
 
-d = u2.connect_usb('dc1fa629')
-d.app_start("com.alibaba.android.rimet")
-time.sleep(5)
-d(text="工作台").click()
-time.sleep(3)
-d(text="考勤打卡").click()
-time.sleep(3)
-d(scrollable=True).fling.toEnd()
+# d = u2.connect_usb('dc1fa629')
+# d.app_start("com.alibaba.android.rimet")
+# time.sleep(5)
+# d(text="工作台").click()
+# time.sleep(3)
+# d(text="考勤打卡").click()
+# time.sleep(3)
+# d(scrollable=True).fling.toEnd()
 
 #
 # def click_text(self, str, sq=0):  # 对于无法直接点击的控件写了个函数
@@ -79,3 +79,7 @@ d(scrollable=True).fling.toEnd()
 #     sched.add_job(job1, 'cron', day_of_week='mon-fri', hour='8', minute='50')
 #     sched.add_job(job2, 'cron', day_of_week='mon-fri', hour='18', minute='10')
 #     sched.start()
+
+# localtime = time.asctime(time.localtime(time.time()))
+
+print(time.strftime("%H:%M:%S",time.localtime()))

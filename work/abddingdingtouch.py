@@ -25,7 +25,7 @@ def connectPhone():
     d.app_start("com.alibaba.android.rimet")
     time.sleep(5)
     d1 = d(text="工作台").exists(timeout=3)
-    print("进入工作台",d1)
+    print("进入工作台", d1)
     d(text="工作台").click()
     time.sleep(5)
     d2 = d(text="考勤打卡").exists(timeout=3)

@@ -21,6 +21,7 @@ d = u2.connect_adb_wifi('192.168.1.105:5555')
 
 
 def connectPhone():
+    # d = u2.connect_usb('dc1fa629')
     d = u2.connect_adb_wifi('192.168.1.105:5555')
     d.app_start("com.alibaba.android.rimet")
     time.sleep(5)
